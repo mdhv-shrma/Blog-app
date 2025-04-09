@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export default function PostDetailPage() {
   const router = useRouter();
@@ -26,23 +27,38 @@ export default function PostDetailPage() {
     }
   }, [slug]);
 
-  if (loading) return <p className="text-center mt-10">Loading...</p>;
+  if (loading) return <p className="text-center mt-10 text-xl text-gray-600">Loading...</p>;
 
-  if (!post) return <p className="text-center mt-10 text-red-500">Post not found</p>;
+  if (!post) return <p className="text-center mt-10 text-xl text-red-500">Post not found</p>;
 
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4 text-center">{post.title}</h1>
-      <div className="relative w-full h-80 mb-6 rounded-md overflow-hidden">
-        <Image
-          src={post.image}
-          alt={post.title}
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 100vw, 768px"
-        />
+    <div className="bg-gradient-to-br from-white via-blue-50 to-pink-50 min-h-screen py-12 px-4">
+      <div className="max-w-4xl mx-auto bg-white shadow-xl rounded-3xl p-8 md:p-12 transition duration-300">
+        <Link href="/" className="inline-block text-blue-600 mb-6 hover:underline">
+          ← Back to Home
+        </Link>
+
+        <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight text-center">
+          {post.title}
+        </h1>
+
+        {post.image && (
+          <div className="relative w-full h-80 md:h-[28rem] mb-10 rounded-xl overflow-hidden shadow-md">
+            <Image
+              src={post.image}
+              alt={post.title}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 100vw, 768px"
+              priority
+            />
+          </div>
+        )}
+
+        <article className="prose prose-lg md:prose-xl max-w-none prose-img:rounded-xl prose-headings:text-gray-800 prose-p:text-gray-700">
+          <p>{post.content}</p>
+        </article>
       </div>
-      <p className="text-gray-700 text-lg">{post.content}</p>
     </div>
   );
 }

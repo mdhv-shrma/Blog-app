@@ -15,10 +15,10 @@ export default function Login() {
       password: form.password,
     });
 
-    if (res.ok) {
-      router.push("/dashboard");
+    if (res?.ok) {
+      router.push("/posts");
     } else {
-      alert("Login failed");
+      alert(res?.error || "Login failed");
     }
   };
 
@@ -48,6 +48,14 @@ export default function Login() {
           Login
         </button>
       </form>
+      <div className="mt-6 text-center">
+        <a
+          href="/signup"
+          className="text-blue-600 hover:underline dark:text-blue-400"
+        >
+          Don't have an account? Sign Up
+        </a>
+      </div>
     </div>
   );
 }

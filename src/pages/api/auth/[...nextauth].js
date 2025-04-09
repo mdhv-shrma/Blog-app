@@ -5,10 +5,7 @@ import dbConnect from "@/lib/db"; // your DB connection function
 import User from "@/models/User"; // your user schema
 import bcrypt from "bcryptjs";
 
-const handler = NextAuth({
-  session: {
-    strategy: "jwt",
-  },
+export default NextAuth({
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -28,11 +25,6 @@ const handler = NextAuth({
       },
     }),
   ],
-  pages: {
-    signIn: "/login",
-    signOut: "/logout",
-    error: "/auth-error",
-  },
   callbacks: {
     async jwt({ token, user }) {
       if (user) token.user = user;
@@ -45,5 +37,3 @@ const handler = NextAuth({
   },
   secret: process.env.NEXTAUTH_SECRET,
 });
-
-export { handler as GET, handler as POST };

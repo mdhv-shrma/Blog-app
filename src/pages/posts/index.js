@@ -8,7 +8,10 @@ export default function PostsPage() {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const res = await fetch("/api/getPost");
+        const res = await fetch("/api/posts/getPost");
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
         const data = await res.json();
         setPosts(data);
       } catch (error) {
@@ -20,32 +23,46 @@ export default function PostsPage() {
   }, []);
 
   return (
-    <div className="p-6 max-w-6xl mx-auto">
-      <h1 className="text-4xl font-bold mb-6 text-center text-blue-600 dark:text-blue-400">
-        All Blog Posts
-      </h1>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-100 dark:from-gray-900 dark:to-gray-800 py-16 px-6">
+      <div className="max-w-7xl mx-auto">
+        <h1 className="text-4xl font-extrabold text-center text-blue-700 dark:text-white mb-12">
+          📚 All Blog Posts
+        </h1>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-        {posts.map((post) => (
-          <Link key={post._id} href={`/posts/${post.slug}`}>
-            <div className="border rounded-lg shadow hover:shadow-lg cursor-pointer overflow-hidden bg-white dark:bg-gray-800 transition-all duration-200">
-              <div className="relative w-full h-48">
-                <Image
-                  src={post.image}
-                  alt={post.title}
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
-                />
-              </div>
-              <div className="p-4">
-                <h2 className="text-lg font-semibold text-gray-800 dark:text-gray-200">
-                  {post.title}
-                </h2>
-              </div>
-            </div>
-          </Link>
-        ))}
+        {posts.length === 0 ? (
+          <p className="text-center text-gray-600 dark:text-gray-300 text-lg">
+            No posts found. Please check back later.
+          </p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            {posts.map((post) => (
+              <Link key={post._id} href={`/posts/${post.slug}`} passHref>
+                <div className="group border rounded-xl overflow-hidden bg-white dark:bg-gray-900 shadow-md hover:shadow-xl transition-shadow duration-300 cursor-pointer">
+                  {/* Post Image */}
+                  <div className="relative w-full h-52">
+                    <Image
+                      src={post.image}
+                      alt={post.title}
+                      fill
+                      className="object-cover group-hover:scale-105 transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, 33vw"
+                    />
+                  </div>
+
+                  {/* Post Content */}
+                  <div className="p-5">
+                    <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
+                      {post.title}
+                    </h2>
+                    <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
+                      {post.description || "Read more about this post..."}
+                    </p>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

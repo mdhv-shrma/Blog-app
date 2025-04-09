@@ -6,20 +6,14 @@ export default async function handler(req, res) {
     await dbConnect();
 
     if (req.method === "GET") {
-      const { featured } = req.query;
-
-      const filter = featured === "true" ? { isFeatured: { $eq: true } } : {}; // Explicitly query for true
-      const posts = await Post.find(filter).sort({ createdAt: -1 });
-      if (!posts || posts.length === 0) {
-        console.warn("No featured posts found");
-      }
+      const posts = await Post.find({ isFeatured: true }).sort({ createdAt: -1 }); // Query only featured posts
       res.status(200).json(posts);
     } else {
       res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   } catch (error) {
-    console.error("Failed to fetch posts:", error);
+    console.error("Failed to fetch featured posts:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 }

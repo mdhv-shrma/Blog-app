@@ -1,8 +1,10 @@
 // pages/add-post.js
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 
 export default function AddPostPage() {
+  const { data: session, status } = useSession();
   const router = useRouter();
 
   const [form, setForm] = useState({
@@ -15,6 +17,15 @@ export default function AddPostPage() {
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+
+  if (status === "loading") {
+    return <p className="text-center mt-10">Loading...</p>;
+  }
+
+  if (!session) {
+    router.push("/login");
+    return null;
+  }
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

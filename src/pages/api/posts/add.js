@@ -1,4 +1,3 @@
-// pages/api/posts/add.js
 import dbConnect from "@/lib/db";
 import Post from "@/models/Post";
 
@@ -9,10 +8,12 @@ export default async function handler(req, res) {
 
   await dbConnect();
 
-  const { title, slug, content, image } = req.body;
+  // Include isFeatured in destructuring
+  const { title, slug, content, image, isFeatured } = req.body;
 
   try {
-    const newPost = new Post({ title, slug, content, image });
+    // Pass isFeatured to the Post model
+    const newPost = new Post({ title, slug, content, image, isFeatured });
     await newPost.save();
     res.status(201).json({ success: true, post: newPost });
   } catch (error) {
