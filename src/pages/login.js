@@ -2,6 +2,7 @@
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import Link from "next/link";
 
 export default function Login() {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -49,12 +50,12 @@ export default function Login() {
         </button>
       </form>
       <div className="mt-6 text-center">
-        <a
+        <Link
           href="/signup"
           className="text-blue-600 hover:underline dark:text-blue-400"
         >
-          Don't have an account? Sign Up
-        </a>
+          Dont have an account? Sign Up
+        </Link>
       </div>
     </div>
   );
