@@ -20,8 +20,9 @@ const PostSchema = new mongoose.Schema(
       type: String,
     },
     author: {
-      type: String,
-      default: "Admin",
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
     },
     isFeatured: {
       type: Boolean,

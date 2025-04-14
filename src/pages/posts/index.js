@@ -57,6 +57,9 @@ export default function PostsPage() {
                     <p className="text-gray-600 dark:text-gray-400 line-clamp-2">
                       {post.description || "Read more about this post..."}
                     </p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 mt-2">
+                      By: {post.author?.name || "Unknown Author"} {/* Fallback for undefined author */}
+                    </p>
                   </div>
                 </div>
               </Link>

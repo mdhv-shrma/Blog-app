@@ -7,7 +7,7 @@ export default async function handler(req, res) {
   const { slug } = req.query;
 
   try {
-    const post = await Post.findOne({ slug });
+    const post = await Post.findOne({ slug }).populate("author", "name"); // Populate author name
 
     if (!post) {
       return res.status(404).json({ message: "Post not found" });

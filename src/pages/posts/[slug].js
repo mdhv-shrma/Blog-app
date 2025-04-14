@@ -42,6 +42,10 @@ export default function PostDetailPage() {
           {post.title}
         </h1>
 
+        <p className="text-center text-gray-600 dark:text-gray-400 mb-4">
+          By: {post.author.name}
+        </p>
+
         {post.image && (
           <div className="relative w-full h-80 md:h-[28rem] mb-10 rounded-xl overflow-hidden shadow-md">
             <Image

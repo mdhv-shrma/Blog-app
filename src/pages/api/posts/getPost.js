@@ -9,9 +9,9 @@ export default async function handler(req, res) {
       const { featured } = req.query;
 
       const filter = featured === "true" ? { isFeatured: { $eq: true } } : {}; // Explicitly query for true
-      const posts = await Post.find(filter).sort({ createdAt: -1 });
+      const posts = await Post.find(filter).populate("author", "name").sort({ createdAt: -1 }); // Populate author name
       if (!posts || posts.length === 0) {
-        console.warn("No featured posts found");
+        console.warn("No posts found");
       }
       res.status(200).json(posts);
     } else {
