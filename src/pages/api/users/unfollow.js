@@ -18,17 +18,15 @@ export default async function handler(req, res) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    if (!user.following.includes(targetUserId)) {
-      user.following.push(targetUserId);
-      targetUser.followers.push(userId);
+    user.following = user.following.filter((id) => id.toString() !== targetUserId);
+    targetUser.followers = targetUser.followers.filter((id) => id.toString() !== userId);
 
-      await user.save();
-      await targetUser.save();
-    }
+    await user.save();
+    await targetUser.save();
 
-    res.status(200).json({ message: "Followed successfully" });
+    res.status(200).json({ message: "Unfollowed successfully" });
   } catch (error) {
-    console.error("Error following user:", error);
+    console.error("Error unfollowing user:", error);
     res.status(500).json({ message: "Server error" });
   }
 }

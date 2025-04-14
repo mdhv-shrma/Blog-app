@@ -33,6 +33,9 @@ export default function Navbar() {
           <Link href="/posts" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             Posts
           </Link>
+          <Link href="/feed" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+            Feed
+          </Link>
           <Link href="/contact" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
             Contact
           </Link>

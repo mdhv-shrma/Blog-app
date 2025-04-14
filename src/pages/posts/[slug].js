@@ -43,7 +43,13 @@ export default function PostDetailPage() {
         </h1>
 
         <p className="text-center text-gray-600 dark:text-gray-400 mb-4">
-          By: {post.author.name}
+          By:{" "}
+          <Link
+            href={`/profile/${post.author._id}`}
+            className="text-blue-600 hover:underline"
+          >
+            {post.author.name}
+          </Link>
         </p>
 
         {post.image && (
