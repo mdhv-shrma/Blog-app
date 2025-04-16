@@ -28,9 +28,9 @@ export default async function handler(req, res) {
       title,
       slug,
       content,
-      image,
+      image: image || "/vercel.png",
       isFeatured,
-      author: user._id, // Use ObjectId
+      author: user._id,
     });
     await newPost.save();
     res.status(201).json({ success: true, post: newPost });

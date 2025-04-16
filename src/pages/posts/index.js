@@ -41,7 +41,7 @@ export default function PostsPage() {
                   {/* Post Image */}
                   <div className="relative w-full h-52">
                     <Image
-                      src={post.image}
+                      src={post.image || "/vercel.png"} // Use default image if none is provided
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"

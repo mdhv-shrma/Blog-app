@@ -55,7 +55,7 @@ export default function PostDetailPage() {
         {post.image && (
           <div className="relative w-full h-80 md:h-[28rem] mb-10 rounded-xl overflow-hidden shadow-md">
             <Image
-              src={post.image}
+              src={post.image || "/vercel.png"} // Use default image if none is provided
               alt={post.title}
               fill
               className="object-cover"

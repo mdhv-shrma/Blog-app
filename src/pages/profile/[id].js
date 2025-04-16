@@ -14,7 +14,7 @@ export default function UserProfilePage() {
   const [showFollowing, setShowFollowing] = useState(false);
 
   useEffect(() => {
-    if (id) {
+    if (id && session) {
       const fetchProfileData = async () => {
         try {
           const res = await fetch(`/api/users/${id}`);
@@ -22,8 +22,9 @@ export default function UserProfilePage() {
 
           if (data.user) {
             setProfileUser(data.user);
+            // Recalculate isFollowing based on the latest profile data
             setIsFollowing(
-              data.user.followers?.some((followerId) => followerId === session?.user?.id) || false
+              data.user.followers?.some((followerId) => followerId === session.user.id) || false
             );
           } else {
             console.error("User data is undefined");
@@ -35,7 +36,7 @@ export default function UserProfilePage() {
 
       fetchProfileData();
     }
-  }, [id, session]);
+  }, [id, session]); // Ensure this runs whenever `id` or `session` changes
 
   useEffect(() => {
     if (id) {
@@ -100,7 +101,7 @@ export default function UserProfilePage() {
   return (
     <div className="max-w-4xl mx-auto mt-10 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
       <h2 className="text-2xl font-bold mb-4 text-blue-600 dark:text-blue-400">
-        {profileUser.name} Profile
+        {profileUser.name}
       </h2>
       <p>
         <strong>Email:</strong> {profileUser.email}
@@ -157,24 +158,6 @@ export default function UserProfilePage() {
           )}
         </div>
       )}
-
-      <div className="mt-8">
-        <h3 className="text-xl font-bold">Followers</h3>
-        <ul>
-          {followers.map((follower) => (
-            <li key={follower._id}>{follower.name} ({follower.email})</li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="mt-8">
-        <h3 className="text-xl font-bold">Following</h3>
-        <ul>
-          {following.map((followed) => (
-            <li key={followed._id}>{followed.name} ({followed.email})</li>
-          ))}
-        </ul>
-      </div>
     </div>
   );
 }

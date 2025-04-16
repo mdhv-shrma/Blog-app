@@ -50,7 +50,7 @@ export default function FeedPage() {
                   {/* Post Image */}
                   <div className="relative w-full h-52">
                     <Image
-                      src={post.image}
+                      src={post.image || "/vercel.png"}
                       alt={post.title}
                       fill
                       className="object-cover group-hover:scale-105 transition-transform duration-300"
